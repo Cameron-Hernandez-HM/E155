@@ -1,6 +1,6 @@
 ---
 title: "Lab 6: The Internet of Things and Serial Peripheral Interface"
-description: "In this lab you will learn how to use time multiplexing to efficiently use the I/O on your FPGA."
+description: "In this lab, you will learn how to design and build an Internet of Things (IoT) device by implementing SPI communication on an MCU, interfacing with a temperature sensor and an ESP8266 WiFi module, debugging serial protocols with a logic analyzer, and creating an HTML webpage to control an LED and display real-time temperature data."
 author: "Cameron Hernandez"
 date: "10/23/25"
 categories:

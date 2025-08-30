@@ -1,6 +1,6 @@
 ---
-title: "Hello Quarto"
-description: "Welcome to my Quarto portfolio"
+title: "The Beginning of Something Great"
+description: "Initial reflection for the start of E155"
 author: "Cameron Hernandez"
 date: "8/29/25"
 categories:
@@ -8,3 +8,7 @@ categories:
   - labreport
 draft: false
 ---
+
+### Reflection
+
+I am looking forward to this semester, the labs seem very exciting and hands on. Some skills I am hoping to learn are a better understanding of how FPGA's are utlized in real world settings. I have used an FPGA in my most recent internship, but it was very breif and I would have liked to have pushed my understanding of how they work a little more. I am hoping to finishing all of the labs while maintaining a healthy sleep balance, however, lab 3 may have to say otherwise... 

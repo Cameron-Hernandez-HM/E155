@@ -2,7 +2,7 @@
 title: "E155 Labs"
 listing:
   contents: /labs
-  sort: "date desc"
+  sort: "date asc"
   type: default
   categories: false
 ---

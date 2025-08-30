@@ -9,7 +9,7 @@ website:
         text: Home
 
       - href: blog.qmd
-        text: Blog
+        text: Blogs
       
       - href: labs.qmd
         text: Labs

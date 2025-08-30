@@ -1,6 +1,6 @@
 ---
 title: "Lab 7: The Advanced Encryption Standard"
-description: "In this lab you will learn how to use time multiplexing to efficiently use the I/O on your FPGA."
+description: "In this lab, you will design and implement a hardware accelerator on an FPGA to perform 128-bit AES encryption, interface it with an MCU over SPI, debug your system using a logic analyzer, and gain hands-on experience with reading complex specifications, hardware architecture, and hardware-software integration."
 author: "Cameron Hernandez"
 date: "10/30/25"
 categories:
