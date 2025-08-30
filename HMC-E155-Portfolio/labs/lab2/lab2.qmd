@@ -1,0 +1,10 @@
+---
+title: "Lab 2: Multiplexed 7-Segment Display"
+description: "In this lab you will learn how to use time multiplexing to efficiently use the I/O on your FPGA."
+author: "Cameron Hernandez"
+date: "9/11/25"
+categories:
+  - reflection
+  - labreport
+draft: false
+---

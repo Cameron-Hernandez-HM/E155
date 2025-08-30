@@ -1,0 +1,10 @@
+---
+title: "Lab 1: FPGA and MCU Setup and Testing"
+description: "In this lab you will familiarize yourself with the microcontroller unit (MCU) and field-programmable gate array (FPGA) development boards we will be using this semester."
+author: "Cameron Hernandez"
+date: "9/04/25"
+categories:
+  - reflection
+  - labreport
+draft: false
+---

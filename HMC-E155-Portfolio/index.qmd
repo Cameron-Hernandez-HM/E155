@@ -1,0 +1,15 @@
+---
+title: "E155 Portfolio"
+image: images/headshot.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/cameron-hernandez-91b431212/
+    - icon: github
+      text: Github
+      href: https://github.com/Cameron-Hernandez-HM
+---
+
+My name is Cameron Hernandez, I am a Senior at Harvey Mudd College currently perusing a bachelors in engineering. I am is passionate about electronic hardware and circuit designs. I have expierence ranging from working with power electronincs, desigining autonomous robotics, simulating electrically small antennas, and creating a multicycle processor. Stepping away from electrical engineering, I have taken engineering courses in the chemical, mechanical, material, and systems domains. 
