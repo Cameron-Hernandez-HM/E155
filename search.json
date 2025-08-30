@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "labs.html",
+    "href": "labs.html",
+    "title": "E155 Labs",
+    "section": "",
+    "text": "Lab 7: The Advanced Encryption Standard\n\n\nIn this lab you will learn how to use time multiplexing to efficiently use the I/O on your FPGA.\n\n\n\n\n\nOct 30, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 6: The Internet of Things and Serial Peripheral Interface\n\n\nIn this lab you will learn how to use time multiplexing to efficiently use the I/O on your FPGA.\n\n\n\n\n\nOct 23, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 5: Interrupts\n\n\nIn this lab you will use your MCU to determine the speed of a motor by reading from a quadrature encoder using interrupts.\n\n\n\n\n\nOct 9, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 4: Digital Audio\n\n\nIn this lab you will use your MCU to play music by using timers to generate square waves by toggling a GPIO pin at a specific frequency for specified durations.\n\n\n\n\n\nOct 2, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 3: Keypad Scanner\n\n\nIn this lab you will learn how to use an FPGA to scan inputs from a keypad.\n\n\n\n\n\nSep 18, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 2: Multiplexed 7-Segment Display\n\n\nIn this lab you will learn how to use time multiplexing to efficiently use the I/O on your FPGA.\n\n\n\n\n\nSep 11, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 1: FPGA and MCU Setup and Testing\n\n\nIn this lab you will familiarize yourself with the microcontroller unit (MCU) and field-programmable gate array (FPGA) development boards we will be using this semester.\n\n\n\n\n\nSep 4, 2025\n\n\nCameron Hernandez\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "E155 Portfolio",
+    "section": "",
+    "text": "My name is Cameron Hernandez, I am a Senior at Harvey Mudd College currently perusing a bachelors in engineering. I am is passionate about electronic hardware and circuit designs. I have expierence ranging from working with power electronincs, desigining autonomous robotics, simulating electrically small antennas, and creating a multicycle processor. Stepping away from electrical engineering, I have taken engineering courses in the chemical, mechanical, material, and systems domains."
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "E155 Blog",
+    "section": "",
+    "text": "Hello Quarto\n\n\nWelcome to my Quarto portfolio\n\n\n\n\n\nAug 29, 2025\n\n\nCameron Hernandez\n\n\n\n\n\nNo matching items"
+  }
+]
