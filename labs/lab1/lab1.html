@@ -194,7 +194,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/BlockDiagram.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 1: Block Diagram</figcaption>
+<figcaption>Figure 1: Block Diagram, Cameron Hernandez, 9/3/2025</figcaption>
 </figure>
 </div>
 <p>Figure 1 illustrates a block diagram of the architecture of the design for lab 1. The top module takes a 4 bus input, which corresponds to the 4 DIP switch. The dipswitches input into a submodule called segmentDisp which controls the seven segment display. Outputting from segmentDisp are the 7 corresponding led’s on the seven segment display which are what control when each individual led on the display lighting up. These are connected to Pins 3, 45, 20, 12, 18, 44, and 9. The DIP switches also pass into an “and” gate and an “xor” gate which control two leds off the board. Lastly, the built in HSOSC controls a timer which then outputs a 2.4Hz signal which controls a third led.</p>
@@ -204,14 +204,14 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Schematic.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 2: Schematic</figcaption>
+<figcaption>Figure 2: Schematic, Cameron Hernandez, 9/3/2025</figcaption>
 </figure>
 </div>
 <p>My schematic, figure 2, illustrates four switches which connect into the FPGA block ICE40UP5K-S648. Each switch connects to a corresponding pin where there is a 100KΩ internal resistor that then connects to the 3.3V supply. Output from the FPGA pins, specifically pins 48, 2, and 47, connect to an led which then has a 1kΩ pull down resistor. A 3.3V from the FPGA powers the HD5P-511A seven segment display which internally has 7 leds that connect to a 1kΩ resistor to allow for a minimal current to enter the FPGA into its corresponding ports.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Calcualtions.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 3: Calculations</figcaption>
+<figcaption>Figure 3: Calculations, Cameron Hernandez, 9/3/2025</figcaption>
 </figure>
 </div>
 </section>
@@ -221,26 +221,26 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/topTBWaves.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 4: Top Module Test Bench Waveforms</figcaption>
+<figcaption>Figure 4: Top Module Test Bench Waveforms, Cameron Hernandez, 9/3/2025</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/topTBLog.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 5: Top Module Test Bench Terminal Report</figcaption>
+<figcaption>Figure 5: Top Module Test Bench Terminal Report, Cameron Hernandez, 9/3/2025</figcaption>
 </figure>
 </div>
 <p>To test this, a submodule testbench was written which directly ensures the seven segment logic works as intended, then a top module testbench was written to make sure everything works as intended. All passed and the physical outputs match as well.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/SegmentDispTBWaves.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 6: SegmentDisp Test Bench Waveforms</figcaption>
+<figcaption>Figure 6: SegmentDisp Test Bench Waveforms, Cameron Hernandez, 9/3/2025</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/SegmentDispTBLog.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 7: SegmentDisp Test Bench Terminal Report</figcaption>
+<figcaption>Figure 7: SegmentDisp Test Bench Terminal Report, Cameron Hernandez, 9/3/2025</figcaption>
 </figure>
 </div>
 </section>
