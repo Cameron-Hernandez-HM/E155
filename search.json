@@ -35,6 +35,55 @@
     "text": "The Beginning of Something Great\n\n\nInitial reflection for the start of E155\n\n\n\n\n\nAug 29, 2025\n\n\nCameron Hernandez\n\n\n\n\n\nNo matching items"
   },
   {
+    "objectID": "labs/lab1/lab1.html",
+    "href": "labs/lab1/lab1.html",
+    "title": "Lab 1: FPGA and MCU Setup and Testing",
+    "section": "",
+    "text": "34"
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#hours-spent",
+    "href": "labs/lab1/lab1.html#hours-spent",
+    "title": "Lab 1: FPGA and MCU Setup and Testing",
+    "section": "",
+    "text": "34"
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#introduction",
+    "href": "labs/lab1/lab1.html#introduction",
+    "title": "Lab 1: FPGA and MCU Setup and Testing",
+    "section": "Introduction:",
+    "text": "Introduction:\nThis lab required an implemented design on the FPGA to demonstrate functionality of an on-board high-speed oscillator via blinking an LEDs. To achieve this required a 24MHz frequency configuration on the high speed oscillator which was undivided down using a counter to achieve a blinking frequency of 2.4 Hz. Furthermore, 4 DIP switches which represented a binary input were used to configure a 7-segment display where each different binary value corresponded to a hexadecimal representation on the segment display. Design and Testing Methodology: Onboard the FPGA lies the HSOSC which outputs a clock that operates at a frequency of 24MHz. Using a counter set to divide the operating frequency once it reached a value of 5M resulted in an LED blinking every 1/(2.4) seconds, which corresponds to 2.4Hz. This divider is instantiated in the top module. This LED was defined as led[2]\nA seven segment display was placed on a breadboard which utilized a 3.3V source. 1kΩ current limiting resistors connecting to ground at the FPGA pins allowed for a safe amount of current to flow through the system. To control each led in the seven segment display combinational logic from a four input DIP switch was utilized where combinational logic from the switches would translate a binary value to its corresponding hexadecimal value which would appear on the seven segment display. This display ranged from 0 to F as the four different switches corresponded to 16 total configurations.\nIn total three LEDs were utilized where led[2] corresponded to the blinking 2.4Hz signal, led[1] utilized the combinational DIP switches which would only activate if both s[3] & s[2] were high. led[0] was configured as an xor relying on the inputs of the first two DIP switches s[1] ^ s[0]. Technical Documentation: The source code for this project can be found in the associated Github repository here: put link here"
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#block-diagram",
+    "href": "labs/lab1/lab1.html#block-diagram",
+    "title": "Lab 1: FPGA and MCU Setup and Testing",
+    "section": "Block Diagram:",
+    "text": "Block Diagram:\n\n\n\nFigure 1: Block Diagram\n\n\nFigure 1 illustrates a block diagram of the architecture of the design for lab 1. The top module takes a 4 bus input, which corresponds to the 4 DIP switch. The dipswitches input into a submodule called segmentDisp which controls the seven segment display. Outputting from segmentDisp are the 7 corresponding led’s on the seven segment display which are what control when each individual led on the display lighting up. These are connected to Pins 3, 45, 20, 12, 18, 44, and 9. The DIP switches also pass into an “and” gate and an “xor” gate which control two leds off the board. Lastly, the built in HSOSC controls a timer which then outputs a 2.4Hz signal which controls a third led."
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#schematic",
+    "href": "labs/lab1/lab1.html#schematic",
+    "title": "Lab 1: FPGA and MCU Setup and Testing",
+    "section": "Schematic:",
+    "text": "Schematic:\n\n\n\nFigure 2: Schematic\n\n\nMy schematic, figure 2, illustrates four switches which connect into the FPGA block ICE40UP5K-S648. Each switch connects to a corresponding pin where there is a 100KΩ internal resistor that then connects to the 3.3V supply. Output from the FPGA pins, specifically pins 48, 2, and 47, connect to an led which then has a 1kΩ pull down resistor. A 3.3V from the FPGA powers the HD5P-511A seven segment display which internally has 7 leds that connect to a 1kΩ resistor to allow for a minimal current to enter the FPGA into its corresponding ports.\n\n\n\nFigure 3: Calculations"
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#results",
+    "href": "labs/lab1/lab1.html#results",
+    "title": "Lab 1: FPGA and MCU Setup and Testing",
+    "section": "Results:",
+    "text": "Results:\nThe design met all the intended design objectives. A testbench was written to ensure that the three leds flash when their requirements are met as well as ensure that the seven different leds on the seven segment display output correctly based on the input logic of the DIP switches.\n\n\n\nFigure 4: Top Module Test Bench Waveforms\n\n\n\n\n\nFigure 5: Top Module Test Bench Terminal Report\n\n\nTo test this, a submodule testbench was written which directly ensures the seven segment logic works as intended, then a top module testbench was written to make sure everything works as intended. All passed and the physical outputs match as well.\n\n\n\nFigure 6: SegmentDisp Test Bench Waveforms\n\n\n\n\n\nFigure 7: SegmentDisp Test Bench Terminal Report"
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#ai-prototype",
+    "href": "labs/lab1/lab1.html#ai-prototype",
+    "title": "Lab 1: FPGA and MCU Setup and Testing",
+    "section": "AI Prototype:",
+    "text": "AI Prototype:\nI asked ChatGPT to Write SystemVerilog HDL to leverage the internal high speed oscillator in the Lattice UP5K FPGA and blink an LED at 2 Hz. Take full advantage of SystemVerilog syntax, for example, using logic instead of wire and reg. Here Chat gave me this code as a response: //=========================================================== // Blink LED @ 2 Hz using iCE40UP5K internal HFOSC //=========================================================== module led_blink ( output logic led // Active HIGH LED output );\n// ----------------------------\n// HFOSC Primitive Instantiation\n// ----------------------------\n// Available DIV settings:\n//   2'b00 = 48 MHz\n//   2'b01 = 24 MHz\n//   2'b10 = 12 MHz\n//   2'b11 = reserved\nlogic clk_48mhz;\n\nSB_HFOSC #(\n    .CLKHF_DIV(\"0b00\")   // Select full 48 MHz\n) u_hfosc (\n    .CLKHFEN(1'b1),      // Enable HFOSC\n    .CLKHFPU(1'b1),      // Power up HFOSC\n    .CLKHF(clk_48mhz)\n);\n\n// ----------------------------\n// Parameters\n// ----------------------------\nlocalparam int COUNT_MAX = 24_000_000 - 1;  // 0.5s @ 48MHz\nlocalparam int COUNTER_WIDTH = $clog2(COUNT_MAX + 1);\n\n// ----------------------------\n// Registers\n// ----------------------------\nlogic [COUNTER_WIDTH-1:0] counter = '0;\n\n// ----------------------------\n// Counter + LED Toggle Logic\n// ----------------------------\nalways_ff @(posedge clk_48mhz) begin\n    if (counter == COUNT_MAX) begin\n        counter &lt;= '0;\n        led &lt;= ~led;  // Toggle LED every 0.5 sec\n    end\n    else begin\n        counter &lt;= counter + 1;\n    end\nend\nendmodule\nThe way Chat used syntax is a bit surprising with putting dashed lines to separate the code. Also the way it created variables is in all caps which is different from how I usually write code. Also this module only has one output and no inputs. When I tried to synthesize this code it did not pass:\nError message: &gt; prj_open “C:/MicroP/Lab1/Lab1.rdf” C:/MicroP/Lab1/Lab1.rdf &gt; prj_add_source “C:/MicroP/Lab1/source/impl_1/ChatGPT.sv” &gt; prj_run PAR -impl impl_1 0Running “Place & Route Design” failed &gt; prj_run Export -impl impl_1 0Running “Export Files” failed When I pasted this error into Chat, Chat told me:\nGot it 🙂 — you’re getting PAR (Place & Route) failed in Lattice Radiant when trying to build the SystemVerilog code I gave you. This usually isn’t caused by the syntax itself but rather by one of these common issues: The SB_HFOSC primitive isn’t recognized or isn’t enabled.\nThe SystemVerilog file isn’t properly added as a source in your project.\nYour constraints file (.lpf) doesn’t properly map the LED pin.\nThere’s a mismatch between your synthesis settings and the iCE40UP5K device.\nYou’re using .sv but Radiant sometimes defaults to treating HDL as Verilog-2001 unless set explicitly. //=========================================================== // led_blink.sv // Blink an LED at 2 Hz using the Lattice iCE40UP5K HFOSC //===========================================================\nmodule led_blink ( output logic led // Connect this to your LED pin in .lpf );\n// ------------------------------------------------------\n// Internal HFOSC Instantiation (Lattice-specific primitive)\n// ------------------------------------------------------\nlogic clk_48mhz;\n\nSB_HFOSC u_hfosc (\n    .CLKHF(clk_48mhz),   // Output clock\n    .CLKHFEN(1'b1),      // Enable HFOSC\n    .CLKHFPU(1'b1)       // Power up HFOSC\n);\ndefparam u_hfosc.CLKHF_DIV = \"0b00\"; // Set HFOSC to 48 MHz\n\n// ------------------------------------------------------\n// Parameters for 2 Hz LED Blinking\n// ------------------------------------------------------\nlocalparam int FREQ_HZ    = 48_000_000;   // HFOSC frequency\nlocalparam int HALF_PERIOD = FREQ_HZ / 4; // 2 Hz blink = 0.5s ON + 0.5s OFF\nlocalparam int COUNTER_WIDTH = $clog2(HALF_PERIOD);\n\n// ------------------------------------------------------\n// Registers\n// ------------------------------------------------------\nlogic [COUNTER_WIDTH-1:0] counter = '0;\n\n// ------------------------------------------------------\n// LED Blinking Logic\n// ------------------------------------------------------\nalways_ff @(posedge clk_48mhz) begin\n    if (counter == HALF_PERIOD - 1) begin\n        counter &lt;= '0;\n        led &lt;= ~led;  // Toggle LED every 0.5 seconds\n    end else begin\n        counter &lt;= counter + 1;\n    end\nend\nendmodule\nI tried to recompile it using this new code, but it honestly is still very broken and I do not think Chat is very close to properly doing this, but if I spent more time thoroughly explaining my module and what I expect my inputs and outputs to be perhaps it could get it correct."
+  },
+  {
     "objectID": "posts/first-post.html",
     "href": "posts/first-post.html",
     "title": "The Beginning of Something Great",
