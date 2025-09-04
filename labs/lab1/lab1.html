@@ -187,7 +187,19 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="introduction">Introduction:</h2>
 <p>This lab required an implemented design on the FPGA to demonstrate functionality of an on-board high-speed oscillator via blinking an LEDs. To achieve this required a 24MHz frequency configuration on the high speed oscillator which was undivided down using a counter to achieve a blinking frequency of 2.4 Hz. Furthermore, 4 DIP switches which represented a binary input were used to configure a 7-segment display where each different binary value corresponded to a hexadecimal representation on the segment display. Design and Testing Methodology: Onboard the FPGA lies the HSOSC which outputs a clock that operates at a frequency of 24MHz. Using a counter set to divide the operating frequency once it reached a value of 5M resulted in an LED blinking every 1/(2.4) seconds, which corresponds to 2.4Hz. This divider is instantiated in the top module. This LED was defined as led[2]</p>
 <p>A seven segment display was placed on a breadboard which utilized a 3.3V source. 1kΩ current limiting resistors connecting to ground at the FPGA pins allowed for a safe amount of current to flow through the system. To control each led in the seven segment display combinational logic from a four input DIP switch was utilized where combinational logic from the switches would translate a binary value to its corresponding hexadecimal value which would appear on the seven segment display. This display ranged from 0 to F as the four different switches corresponded to 16 total configurations.</p>
-<p>In total three LEDs were utilized where led[2] corresponded to the blinking 2.4Hz signal, led[1] utilized the combinational DIP switches which would only activate if both s[3] &amp; s[2] were high. led[0] was configured as an xor relying on the inputs of the first two DIP switches s[1] ^ s[0]. Technical Documentation: The source code for this project can be found in the associated Github repository here: put link here</p>
+<p>In total three LEDs were utilized where led[2] corresponded to the blinking 2.4Hz signal, led[1] utilized the combinational DIP switches which would only activate if both s[3] &amp; s[2] were high. led[0] was configured as an xor relying on the inputs of the first two DIP switches s[1] ^ s[0]. Technical Documentation: The source code for this project can be found in the associated Github repository here: <a href="https://github.com/Cameron-Hernandez-HM/E155/tree/main/Lab1_CH">GitHub_Lab1_CH</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Board.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Finished Board, Cameron Hernandez, 9/3/2025</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/BreadBoard.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Associated Breadboard, Cameron Hernandez, 9/3/2025</figcaption>
+</figure>
+</div>
 </section>
 <section id="block-diagram" class="level2">
 <h2 class="anchored" data-anchor-id="block-diagram">Block Diagram:</h2>
