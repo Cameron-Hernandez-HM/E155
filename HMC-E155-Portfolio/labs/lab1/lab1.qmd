@@ -21,32 +21,37 @@ A seven segment display was placed on a breadboard which utilized a 3.3V source.
 
 In total three LEDs were utilized where led[2] corresponded to the blinking 2.4Hz signal, led[1] utilized the combinational DIP switches which would only activate if both s[3] & s[2] were high. led[0] was configured as an xor relying on the inputs of the first two DIP switches s[1] ^ s[0].
 Technical Documentation:
-The source code for this project can be found in the associated Github repository here: put link here
+The source code for this project can be found in the associated Github repository here: [GitHub_Lab1_CH](https://github.com/Cameron-Hernandez-HM/E155/tree/main/Lab1_CH)
+
+![Figure 1: Finished Board, Cameron Hernandez, 9/3/2025](images/Board.jpg)
+
+![Figure 2: Associated Breadboard, Cameron Hernandez, 9/3/2025](images/BreadBoard.jpg)
+
 
 ## Block Diagram:
-![Figure 1: Block Diagram](images/BlockDiagram.jpg)
+![Figure 1: Block Diagram, Cameron Hernandez, 9/3/2025](images/BlockDiagram.jpg)
 
 Figure 1 illustrates a block diagram of the architecture of the design for lab 1. The top module takes a 4 bus input, which corresponds to the 4 DIP switch. The dipswitches input into a submodule called segmentDisp which controls the seven segment display. Outputting from segmentDisp are the 7 corresponding led’s on the seven segment display which are what control when each individual led on the display lighting up. These are connected to Pins 3, 45, 20, 12, 18, 44, and 9. The DIP switches also pass into an “and” gate and an “xor” gate which control two leds off the board. Lastly, the built in HSOSC controls a timer which then outputs a 2.4Hz signal which controls a third led. 
 
 ## Schematic:
-![Figure 2: Schematic](images/Schematic.jpg)
+![Figure 2: Schematic, Cameron Hernandez, 9/3/2025](images/Schematic.jpg)
 
 My schematic, figure 2,  illustrates four switches which connect into the FPGA block ICE40UP5K-S648. Each switch connects to a corresponding pin where there is a 100KΩ internal resistor that then connects to the 3.3V supply. Output from the FPGA pins, specifically pins 48, 2, and 47, connect to an led which then has a 1kΩ pull down resistor. A 3.3V from the FPGA powers the HD5P-511A seven segment display which internally has 7 leds that connect to a 1kΩ resistor to allow for a minimal current to enter the FPGA into its corresponding ports. 
 
-![Figure 3: Calculations](images/Calcualtions.jpg)
+![Figure 3: Calculations, Cameron Hernandez, 9/3/2025](images/Calcualtions.jpg)
 
 ## Results:
 The design met all the intended design objectives. A testbench was written to ensure that the three leds flash when their requirements are met as well as ensure that the seven different leds on the seven segment display output correctly based on the input logic of the DIP switches. 
 
-![Figure 4: Top Module Test Bench Waveforms](images/topTBWaves.png)
+![Figure 4: Top Module Test Bench Waveforms, Cameron Hernandez, 9/3/2025](images/topTBWaves.png)
 
-![Figure 5: Top Module Test Bench Terminal Report](images/topTBLog.png)
+![Figure 5: Top Module Test Bench Terminal Report, Cameron Hernandez, 9/3/2025](images/topTBLog.png)
 
 To test this, a submodule testbench was written which directly ensures the seven segment logic works as intended, then a top module testbench was written to make sure everything works as intended. All passed and the physical outputs match as well. 
 
-![Figure 6: SegmentDisp Test Bench Waveforms](images/SegmentDispTBWaves.png)
+![Figure 6: SegmentDisp Test Bench Waveforms, Cameron Hernandez, 9/3/2025](images/SegmentDispTBWaves.png)
 
-![Figure 7: SegmentDisp Test Bench Terminal Report](images/SegmentDispTBLog.png)
+![Figure 7: SegmentDisp Test Bench Terminal Report, Cameron Hernandez, 9/3/2025](images/SegmentDispTBLog.png)
 
 ## AI Prototype:
 I asked ChatGPT to Write SystemVerilog HDL to leverage the internal high speed oscillator in the Lattice UP5K FPGA and blink an LED at 2 Hz. Take full advantage of SystemVerilog syntax, for example, using logic instead of wire and reg. Here Chat gave me this code as a response: 

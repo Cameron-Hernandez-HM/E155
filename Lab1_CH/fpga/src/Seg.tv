@@ -9,6 +9,7 @@
     // Outputs: a b c d e f g
     // Format: Inputs_Outputs
 */
+
 0000_0000001 // 0
 0001_1001111 // 1
 0010_0010010 // 2
