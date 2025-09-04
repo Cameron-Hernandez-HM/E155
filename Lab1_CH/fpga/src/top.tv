@@ -1,0 +1,29 @@
+/*/
+	Author: Cameron Hernandez
+	Email: cahernandez@g.hmc.edu
+	Date: 09/03/2025
+	
+	This file contains the test vectors of the exptected outputs when the module top.sv runs
+	
+	// Inputs (s): i0 i1 i2 i3
+    // Output (segEx): a b c d e f g
+    // Output (led):
+    // Format: s_segEx_led
+*/
+
+0000_0000001_000 //0
+0001_1001111_001 //1
+0010_0010010_001 //2
+0011_0000110_000 //3
+0100_1001100_000 //4
+0101_0100100_001 //5
+0110_0100000_001 //6
+0111_0001111_000 //7
+1000_0000000_000 //8
+1001_0000100_001 //9
+1010_0001000_001 //A
+1011_1100000_000 //b
+1100_0110001_010 //C
+1101_1000010_011 //d
+1110_0110000_011 //E
+1111_0111000_010 //F
