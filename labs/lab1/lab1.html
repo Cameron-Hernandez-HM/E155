@@ -220,6 +220,7 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>My schematic, figure 2, illustrates four switches which connect into the FPGA block ICE40UP5K-S648. Each switch connects to a corresponding pin where there is a 100KΩ internal resistor that then connects to the 3.3V supply. Output from the FPGA pins, specifically pins 48, 2, and 47, connect to an led which then has a 1kΩ pull down resistor. A 3.3V from the FPGA powers the HD5P-511A seven segment display which internally has 7 leds that connect to a 1kΩ resistor to allow for a minimal current to enter the FPGA into its corresponding ports.</p>
+<p>The forward voltage would be 1.8V since that is given from a red led. Thus calculating the current we have (3.3V-1.8)/1500, which comes out to .001A or 1mA.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Calcualtions.jpg" class="img-fluid figure-img"></p>
