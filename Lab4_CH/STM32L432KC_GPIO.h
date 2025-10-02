@@ -1,4 +1,7 @@
 // STM32L432KC_GPIO.h
+// Cameron Hernandez
+// cahernandez@g.hmc.edu
+// 10/2/2025
 // Header for GPIO functions
 
 #ifndef STM32L4_GPIO_H

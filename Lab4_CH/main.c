@@ -1,6 +1,9 @@
-// lab4_starter.c
+// main.c
 // Fur Elise, E155 Lab 4
-// Updated Fall 2024
+// Cameron Hernandez
+// cahernandez@g.hmc.edu
+// 10/2/2025
+// This is the main funciton which plays the defined music notes onto a speaker
 
 #include "stdint.h"
 
@@ -13,6 +16,7 @@
 #include "STM32L432KC_RCC.h"
 
 #include "STM32L432KC_TIM.h"
+// 5MHz / (5mHz/(B2 +1))          (100* b2-c2/b2)
 
 // Pitch in Hz, duration in ms
 const int notes[][2] = {
@@ -129,17 +133,40 @@ const int notes[][2] = {
 
 
 // Freddy’s “Toreador March” / jingle (melody only, simplified)
-const int toreador[][2] = {
-  // (freq in Hz, duration in ms)
-  {523, 300}, {0, 50}, {587, 300}, {0, 50}, {659, 300}, {0, 100},
-  {784, 300}, {0, 100}, {659, 300}, {0, 100}, {587, 300}, {0, 100}, {523, 600}, {0, 200},
-  
-  {523, 300}, {0, 50}, {587, 300}, {0, 50}, {659, 300}, {0, 100},
-  {784, 300}, {0, 100}, {659, 300}, {0, 100}, {587, 300}, {0, 100}, {523, 600}, {0, 200},
-  
-  {440, 400}, {0, 50}, {523, 400}, {0, 50}, {587, 400}, {0, 100}, {659, 400}, {0, 100},
-  {587, 300}, {523, 300}, {440, 600}, {0, 300}
+// Pitch in Hz, duration in ms
+const int birthday[][2] = {
+  {262, 428},  // C4
+  {262, 214},  // C4
+  {294, 321},  // D4
+  {262, 321},  // C4
+  {349, 321},  // F4
+  {330, 642},  // E4
+
+  {262, 428},  // C4
+  {262, 214},  // C4
+  {294, 321},  // D4
+  {262, 321},  // C4
+  {392, 321},  // G4
+  {349, 642},  // F4
+
+  {262, 428},  // C4
+  {262, 214},  // C4
+  {523, 321},  // C5
+  {440, 321},  // A4
+  {349, 321},  // F4
+  {330, 321},  // E4
+  {294, 321},  // D4
+
+  {466, 428},  // A#4
+  {466, 214},  // A#4
+  {440, 321},  // A4
+  {349, 321},  // F4
+  {392, 321},  // G4
+  {349, 642},  // F4
+
+  {0, 0}       // End marker
 };
+
 
 
 
@@ -171,8 +198,8 @@ int main(void) {
         configureTIM16();
         enablePWM();
 
-        melody(notes);
-        delay(500);
+        //melody(notes);
+        //delay(500);
 
-        melody(toreador);
+        melody(birthday);
 }

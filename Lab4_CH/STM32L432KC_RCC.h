@@ -1,4 +1,7 @@
 // STM32L432KC_RCC.h
+// Cameron Hernandez
+// cahernandez@g.hmc.edu
+// 10/2/2025
 // Header for RCC functions
 
 #ifndef STM32L4_RCC_H

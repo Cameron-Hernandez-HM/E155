@@ -1,4 +1,7 @@
 // STM32L432KC_TIM.h
+// Cameron Hernandez
+// cahernandez@g.hmc.edu
+// 10/2/2025
 // Header for TIM functions
 
 #ifndef STM32L4_TIM_H

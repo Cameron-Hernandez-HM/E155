@@ -1,5 +1,9 @@
 // STM32L432KC_RCC.c
-// Source code for RCC functions
+// Cameron Hernandez
+// cahernandez@g.hmc.edu
+// 10/2/2025
+// Source code for TIM functions
+
 
 #include "STM32L432KC_TIM.h"
 

@@ -1,4 +1,7 @@
 // STM32L432KC_RCC.c
+// Cameron Hernandez
+// cahernandez@g.hmc.edu
+// 10/2/2025
 // Source code for RCC functions
 
 #include "STM32L432KC_RCC.h"
