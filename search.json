@@ -21,6 +21,55 @@
     "text": "Lab 1: FPGA and MCU Setup and Testing\n\n\nIn this lab you will familiarize yourself with the microcontroller unit (MCU) and field-programmable gate array (FPGA) development boards we will be using this semester.\n\n\n\n\n\nSep 4, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 2: Multiplexed 7-Segment Display\n\n\nIn this lab you will learn how to use time multiplexing to efficiently use the I/O on your FPGA.\n\n\n\n\n\nSep 11, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 3: Keypad Scanner\n\n\nIn this lab you will learn how to use an FPGA to scan inputs from a keypad.\n\n\n\n\n\nSep 18, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 4: Digital Audio\n\n\nIn this lab you will use your MCU to play music by using timers to generate square waves by toggling a GPIO pin at a specific frequency for specified durations.\n\n\n\n\n\nOct 2, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 5: Interrupts\n\n\nIn this lab you will use your MCU to determine the speed of a motor by reading from a quadrature encoder using interrupts.\n\n\n\n\n\nOct 9, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 6: The Internet of Things and Serial Peripheral Interface\n\n\nIn this lab, you will learn how to design and build an Internet of Things (IoT) device by implementing SPI communication on an MCU, interfacing with a temperature sensor and an ESP8266 WiFi module, debugging serial protocols with a logic analyzer, and creating an HTML webpage to control an LED and display real-time temperature data.\n\n\n\n\n\nOct 23, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 7: The Advanced Encryption Standard\n\n\nIn this lab, you will design and implement a hardware accelerator on an FPGA to perform 128-bit AES encryption, interface it with an MCU over SPI, debug your system using a logic analyzer, and gain hands-on experience with reading complex specifications, hardware architecture, and hardware-software integration.\n\n\n\n\n\nOct 30, 2025\n\n\nCameron Hernandez\n\n\n\n\n\nNo matching items"
   },
   {
+    "objectID": "labs/lab4/lab4.html",
+    "href": "labs/lab4/lab4.html",
+    "title": "Lab 4: Digital Audio",
+    "section": "",
+    "text": "24"
+  },
+  {
+    "objectID": "labs/lab4/lab4.html#hours-spent",
+    "href": "labs/lab4/lab4.html#hours-spent",
+    "title": "Lab 4: Digital Audio",
+    "section": "",
+    "text": "24"
+  },
+  {
+    "objectID": "labs/lab4/lab4.html#introduction",
+    "href": "labs/lab4/lab4.html#introduction",
+    "title": "Lab 4: Digital Audio",
+    "section": "Introduction:",
+    "text": "Introduction:\nThis lab required the use of an MCU programmed in order to play music by using timers to generate square waves by toggling a GPIO pin at a specific frequency for specified durations.\nThis required the use of internal clock timers specifically activating timers 15 and 16. To enable these timers, the clock tree was vital for understanding the pathing. First MSI RC needed to be fed into the PLL which then could be outputted into SYSCLK which would require the use of AHB prescalers (HCLK). Lastly HCLK would go into APB2 prescalers PCLK2 which could then go to TIM15 and TIM16. The AHB prescalers brought the 80MHz clock signal down to 10 MHz, and then down to 5 MHz via the APB2 prescalers.\n\n\n\nFigure 1: CLKTree, Cameron Hernandez, 10/2/2025\n\n\nTo configure clk TIM15 as the clock that handled delay required the use of the internal clock from RCC, which is running at 5 MHz which first needed to go into PSC prescalers. At the same time, the Auto-reload register was required to update the clk and reload when overflowed. From there the output was set into the repetition counter which handled our delay.\n\n\n\nFigure 2: Timer 15 path, Cameron Hernandez, 10/2/2025\n\n\nTo configure the clk TIM16 as the PWM required a bit more work. As the book notes, The PWM mode can be selected independently on each channel (one PWM per OCx output) by writing ‘110’ (PWM mode 1) or ‘111’ (PWM mode 2) in the OCxM bits in the TIMx_CCMRx register. You must enable the corresponding preload register by setting the OCxPE bit in the TIMx_CCMRx register, and eventually the auto-reload preload register (in upcounting or center-aligned modes) by setting the ARPE bit in the TIMx_CR1 register. OCx polarity is software programmable using the CCxP bit in the TIMx_CCER register. It can be programmed as active high or active low. OCx output is enabled by a combination of the CCxE, CCxNE, MOE, OSSI and OSSR bits (TIMx_CCER and TIMx_BDTR registers). Refer to the TIMx_CCER register description for more details.\n\n\n\nFigure 3: Timer 16 path, Cameron Hernandez, 10/2/2025\n\n\nThe use of two timers was essential as one handled the duration of a signal while the other handled the frequency. The clock handling frequency required to be configured in PWM mode. Thus the GPIO, a new part of the GPIO driver, which I chose port 6, would need to be redefined to be able to handle this."
+  },
+  {
+    "objectID": "labs/lab4/lab4.html#block-diagram",
+    "href": "labs/lab4/lab4.html#block-diagram",
+    "title": "Lab 4: Digital Audio",
+    "section": "Block Diagram:",
+    "text": "Block Diagram:\nThere is no block diagram for this Lab"
+  },
+  {
+    "objectID": "labs/lab4/lab4.html#schematic",
+    "href": "labs/lab4/lab4.html#schematic",
+    "title": "Lab 4: Digital Audio",
+    "section": "Schematic:",
+    "text": "Schematic:\n\n\n\nFigure 4: Schematic, Cameron Hernandez, 10/2/2025\n\n\nFigure _ illustrates a the schematic of the system where an audio opAmp LM386 is powered via the STM32L432KC board at 5 volts. Here the board also controls the input into the 10 kohm potentiometer. Outputing from chanel 5 the signal then goes through a 250 uF capacitor and out to a speaker.\n\nCalculations:\n\n\n\nFigure 5: Clock Duration Calculations, Cameron Hernandez, 10/2/2025\n\n\n\n\n\nFigure 6: Frequency Calculations, Cameron Hernandez, 10/2/2025\n\n\n\n\n\nFigure 7: Pitch Calculations, Cameron Hernandez, 10/2/2025"
+  },
+  {
+    "objectID": "labs/lab4/lab4.html#results",
+    "href": "labs/lab4/lab4.html#results",
+    "title": "Lab 4: Digital Audio",
+    "section": "Results:",
+    "text": "Results:\nThe implementation works, the song Fur Elise plays at a reasonable frequency and speed. It does not sound rushed and you can even alternate the volume via the potentiometer. I also added my own song which sings happy birthday. I am very happy with the results of this and would like to see if it can play more difficult songs personally later on. For now I believe that this has qualified for Excellence."
+  },
+  {
+    "objectID": "labs/lab4/lab4.html#ai-prototype",
+    "href": "labs/lab4/lab4.html#ai-prototype",
+    "title": "Lab 4: Digital Audio",
+    "section": "AI Prototype:",
+    "text": "AI Prototype:\nFor the AI prototype I asked Chat What timers should I use on the STM32L432KC to generate frequencies ranging from 220Hz to 1kHz? What’s the best choice of timer if I want to easily connect it to a GPIO pin? What formulae are relevant, and what registers need to be set to configure them properly?\nHere is what it told me: You want to generate audio-range square waves (220 Hz – 1 kHz), output them on a GPIO, and ideally do so with minimal software intervention.\n\nWhich timers should you use?\n\nThe STM32L432KC has several general-purpose timers:\nTIM2, TIM5 → 32-bit, general-purpose.\nTIM15, TIM16, TIM17 → 16-bit, advanced/general.\nTIM1 → 16-bit advanced (PWM, complementary outputs, etc.).\nTIM6, TIM7 → basic timers (no direct GPIO output).\n👉 Best choice for your case:\nUse TIM2 or TIM5 if you want flexibility (large prescaler range, direct output to GPIO, 32-bit counter avoids overflow).\nUse TIM15–17 if you want smaller footprint, but 16-bit means tighter prescaler tuning.\nDon’t use TIM6/7 unless you only need interrupts (they can’t drive GPIO).\nRecommendation: Pick TIM2 (available on all STM32L432 packages) and connect one of its output compare/PWM channels to a GPIO (via AF — Alternate Function mapping).\n\nTimer frequency generation basics\n\nTimers work as programmable frequency dividers:\nTimer input clock 𝑓𝑇𝐼𝑀=𝑓𝐴𝑃𝐵𝑥×(multiplier if APB prescaler &gt; 1)(𝑃𝑆𝐶+1)fTM = (PSC+1)fAPBx ​ ×(multiplier if APB prescaler &gt; 1)\nf_APBx is the peripheral bus clock (depends on clock tree config).\nPSC is the prescaler register (TIMx_PSC).\nTimer period (auto-reload register, ARR)\nThe counter runs from 0 → ARR. Then it resets and repeats.\n𝑓𝑂𝑈𝑇=𝑓𝑇𝐼𝑀(𝐴𝑅𝑅+1)fOUT = (ARR+1)fTIM\nIf you use toggle output compare mode (OCxM = toggle), you get a square wave, so the actual output frequency is:\n𝑓𝑆𝑄=𝑓𝑂𝑈𝑇2=𝑓𝑇𝐼𝑀2⋅(𝐴𝑅𝑅+1)fSQ = 2fOUT = 2⋅(ARR+1)fTIM ​\n\nExample calculation\n\nSay your f_APB1 = 80 MHz (common for STM32L4, TIM2 is on APB1).\nChoose prescaler PSC = 79 → timer tick = 80 MHz / 80 = 1 MHz (1 µs per tick).\nNow to generate 220 Hz:\n𝐴𝑅𝑅=𝑓𝑇𝐼𝑀2𝑓𝑆𝑄−1=1,000,0002⋅220−1≈2272\nARR=2f SQfTIM−1=2⋅2201,000,000\n−1≈2272\nFor 1 kHz:\n𝐴𝑅𝑅=1,000,0002⋅1000−1=499 ARR= 2⋅1000 1,000,000 ​\n−1=499\nBoth values fit in 16 bits — so either TIM2 (32-bit) or a 16-bit timer will work.\n\nRelevant registers\n\nFor toggle output on GPIO using TIM2:\nEnable TIM2 clock\nRCC-&gt;APB1ENR1 |= RCC_APB1ENR1_TIM2EN;\nConfigure prescaler (PSC) & auto-reload (ARR):\nTIM2-&gt;PSC = 79; // Prescaler → 1 MHz timer clock TIM2-&gt;ARR = ARR; // Auto-reload for frequency\nSet Output Compare channel in Toggle mode: Example with Channel 1:\nTIM2-&gt;CCMR1 &= ~TIM_CCMR1_OC1M; TIM2-&gt;CCMR1 |= (0b011 &lt;&lt; TIM_CCMR1_OC1M_Pos); // Toggle on match TIM2-&gt;CCER |= TIM_CCER_CC1E; // Enable output on CH1 TIM2-&gt;CCR1 = 0; // Initial compare value\nRoute TIM2_CH1 to a GPIO pin (Alternate Function): For instance, PA0 can be TIM2_CH1 (AF1).\nGPIOA-&gt;MODER &= ~(0b11 &lt;&lt; (02)); GPIOA-&gt;MODER |= (0b10 &lt;&lt; (02)); // Alternate function GPIOA-&gt;AFR[0] |= (0b0001 &lt;&lt; (0*4)); // AF1 = TIM2_CH1\nEnable timer counter:\nTIM2-&gt;CR1 |= TIM_CR1_CEN;\nNow PA0 outputs a square wave at your programmed frequency.\n\nSummary\n\nBest timer for GPIO frequency generation: TIM2 (32-bit, flexible, direct AF mapping).\nKey formulae:\nTimer tick: 𝑓𝑇𝐼𝑀=𝑓𝐴𝑃𝐵𝑥/(𝑃𝑆𝐶+1)fTIM =fAPBx/(PSC+1)\nUpdate rate: 𝑓𝑈𝑃𝐷=𝑓𝑇𝐼𝑀/(𝐴𝑅𝑅+1)fUPD =fTIM/(ARR+1)\nSquare wave output (toggle mode): 𝑓𝑆𝑄=𝑓𝑈𝑃𝐷/2fSQ =fUPD/2\nRegisters to configure: TIMx_PSC, TIMx_ARR, TIMx_CCRy, TIMx_CCMRy, TIMx_CCER, TIMx_CR1, and the corresponding GPIO MODER/AFR.\nWould you like me to also show you a full minimal C example (using direct register writes) that generates, say, 440 Hz on a pin — so you can adapt it to 220–1kHz easily?\nThis is super cool because it actually gave me examples and equations for how to use it. I think this did a great job at answering my question and looking through the data sheet I belive that what it gave me is actually correct. This would have been useful when working on this project actually."
+  },
+  {
     "objectID": "labs/lab2/lab2.html",
     "href": "labs/lab2/lab2.html",
     "title": "Lab 2: Multiplexed 7-Segment Display",

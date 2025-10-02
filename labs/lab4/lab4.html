@@ -122,8 +122,22 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#hours-spent" id="toc-hours-spent" class="nav-link active" data-scroll-target="#hours-spent">Hours Spent:</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction:</a></li>
+  <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block Diagram:</a></li>
+  <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic:</a>
+  <ul class="collapse">
+  <li><a href="#calculations" id="toc-calculations" class="nav-link" data-scroll-target="#calculations">Calculations:</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results:</a></li>
+  <li><a href="#ai-prototype" id="toc-ai-prototype" class="nav-link" data-scroll-target="#ai-prototype">AI Prototype:</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -168,8 +182,146 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="hours-spent" class="level2">
+<h2 class="anchored" data-anchor-id="hours-spent">Hours Spent:</h2>
+<p>24</p>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction:</h2>
+<p>This lab required the use of an MCU programmed in order to play music by using timers to generate square waves by toggling a GPIO pin at a specific frequency for specified durations.</p>
+<p>This required the use of internal clock timers specifically activating timers 15 and 16. To enable these timers, the clock tree was vital for understanding the pathing. First MSI RC needed to be fed into the PLL which then could be outputted into SYSCLK which would require the use of AHB prescalers (HCLK). Lastly HCLK would go into APB2 prescalers PCLK2 which could then go to TIM15 and TIM16. The AHB prescalers brought the 80MHz clock signal down to 10 MHz, and then down to 5 MHz via the APB2 prescalers.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/CLKTreePath.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: CLKTree, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
+<p>To configure clk TIM15 as the clock that handled delay required the use of the internal clock from RCC, which is running at 5 MHz which first needed to go into PSC prescalers. At the same time, the Auto-reload register was required to update the clk and reload when overflowed. From there the output was set into the repetition counter which handled our delay.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/TIM15.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Timer 15 path, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
+<p>To configure the clk TIM16 as the PWM required a bit more work. As the book notes, The PWM mode can be selected independently on each channel (one PWM per OCx output) by writing ‘110’ (PWM mode 1) or ‘111’ (PWM mode 2) in the OCxM bits in the TIMx_CCMRx register. You must enable the corresponding preload register by setting the OCxPE bit in the TIMx_CCMRx register, and eventually the auto-reload preload register (in upcounting or center-aligned modes) by setting the ARPE bit in the TIMx_CR1 register. OCx polarity is software programmable using the CCxP bit in the TIMx_CCER register. It can be programmed as active high or active low. OCx output is enabled by a combination of the CCxE, CCxNE, MOE, OSSI and OSSR bits (TIMx_CCER and TIMx_BDTR registers). Refer to the TIMx_CCER register description for more details.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/TIM16.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3: Timer 16 path, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
+<p>The use of two timers was essential as one handled the duration of a signal while the other handled the frequency. The clock handling frequency required to be configured in PWM mode. Thus the GPIO, a new part of the GPIO driver, which I chose port 6, would need to be redefined to be able to handle this.</p>
+</section>
+<section id="block-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="block-diagram">Block Diagram:</h2>
+<p>There is no block diagram for this Lab</p>
+</section>
+<section id="schematic" class="level2">
+<h2 class="anchored" data-anchor-id="schematic">Schematic:</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/CircuitSchematic.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: Schematic, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
+<p>Figure _ illustrates a the schematic of the system where an audio opAmp LM386 is powered via the STM32L432KC board at 5 volts. Here the board also controls the input into the 10 kohm potentiometer. Outputing from chanel 5 the signal then goes through a 250 uF capacitor and out to a speaker.</p>
+<section id="calculations" class="level3">
+<h3 class="anchored" data-anchor-id="calculations">Calculations:</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/CLKDurationCalculations.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 5: Clock Duration Calculations, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/FrequencyCalculations.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 6: Frequency Calculations, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/PitchCalculations.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 7: Pitch Calculations, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results:</h2>
+<p>The implementation works, the song Fur Elise plays at a reasonable frequency and speed. It does not sound rushed and you can even alternate the volume via the potentiometer. I also added my own song which sings happy birthday. I am very happy with the results of this and would like to see if it can play more difficult songs personally later on. For now I believe that this has qualified for Excellence.</p>
+</section>
+<section id="ai-prototype" class="level2">
+<h2 class="anchored" data-anchor-id="ai-prototype">AI Prototype:</h2>
+<p>For the AI prototype I asked Chat What timers should I use on the STM32L432KC to generate frequencies ranging from 220Hz to 1kHz? What’s the best choice of timer if I want to easily connect it to a GPIO pin? What formulae are relevant, and what registers need to be set to configure them properly?</p>
+<p>Here is what it told me: You want to generate audio-range square waves (220 Hz – 1 kHz), output them on a GPIO, and ideally do so with minimal software intervention.</p>
+<ol type="1">
+<li>Which timers should you use?</li>
+</ol>
+<p>The STM32L432KC has several general-purpose timers:</p>
+<p>TIM2, TIM5 → 32-bit, general-purpose.</p>
+<p>TIM15, TIM16, TIM17 → 16-bit, advanced/general.</p>
+<p>TIM1 → 16-bit advanced (PWM, complementary outputs, etc.).</p>
+<p>TIM6, TIM7 → basic timers (no direct GPIO output).</p>
+<p>👉 Best choice for your case:</p>
+<p>Use TIM2 or TIM5 if you want flexibility (large prescaler range, direct output to GPIO, 32-bit counter avoids overflow).</p>
+<p>Use TIM15–17 if you want smaller footprint, but 16-bit means tighter prescaler tuning.</p>
+<p>Don’t use TIM6/7 unless you only need interrupts (they can’t drive GPIO).</p>
+<p>Recommendation: Pick TIM2 (available on all STM32L432 packages) and connect one of its output compare/PWM channels to a GPIO (via AF — Alternate Function mapping).</p>
+<ol start="2" type="1">
+<li>Timer frequency generation basics</li>
+</ol>
+<p>Timers work as programmable frequency dividers:</p>
+<p>Timer input clock 𝑓𝑇𝐼𝑀=𝑓𝐴𝑃𝐵𝑥×(multiplier&nbsp;if&nbsp;APB&nbsp;prescaler&nbsp;&gt;&nbsp;1)(𝑃𝑆𝐶+1)fTM = (PSC+1)fAPBx ​ ×(multiplier&nbsp;if&nbsp;APB&nbsp;prescaler&nbsp;&gt;&nbsp;1)</p>
+<p>f_APBx is the peripheral bus clock (depends on clock tree config).</p>
+<p>PSC is the prescaler register (TIMx_PSC).</p>
+<p>Timer period (auto-reload register, ARR)</p>
+<p>The counter runs from 0 → ARR. Then it resets and repeats.</p>
+<p>𝑓𝑂𝑈𝑇=𝑓𝑇𝐼𝑀(𝐴𝑅𝑅+1)fOUT = (ARR+1)fTIM</p>
+<p>If you use toggle output compare mode (OCxM = toggle), you get a square wave, so the actual output frequency is:</p>
+<p>𝑓𝑆𝑄=𝑓𝑂𝑈𝑇2=𝑓𝑇𝐼𝑀2⋅(𝐴𝑅𝑅+1)fSQ = 2fOUT = 2⋅(ARR+1)fTIM ​</p>
+<ol start="3" type="1">
+<li>Example calculation</li>
+</ol>
+<p>Say your f_APB1 = 80 MHz (common for STM32L4, TIM2 is on APB1).</p>
+<p>Choose prescaler PSC = 79 → timer tick = 80 MHz / 80 = 1 MHz (1 µs per tick).</p>
+<p>Now to generate 220 Hz:</p>
+<p>𝐴𝑅𝑅=𝑓𝑇𝐼𝑀2𝑓𝑆𝑄−1=1,000,0002⋅220−1≈2272</p>
+<p>ARR=2f SQfTIM−1=2⋅2201,000,000</p>
+<p>−1≈2272</p>
+<p>For 1 kHz:</p>
+<p>𝐴𝑅𝑅=1,000,0002⋅1000−1=499 ARR= 2⋅1000 1,000,000 ​</p>
+<p>−1=499</p>
+<p>Both values fit in 16 bits — so either TIM2 (32-bit) or a 16-bit timer will work.</p>
+<ol start="4" type="1">
+<li>Relevant registers</li>
+</ol>
+<p>For toggle output on GPIO using TIM2:</p>
+<p>Enable TIM2 clock</p>
+<p>RCC-&gt;APB1ENR1 |= RCC_APB1ENR1_TIM2EN;</p>
+<p>Configure prescaler (PSC) &amp; auto-reload (ARR):</p>
+<p>TIM2-&gt;PSC = 79; // Prescaler → 1 MHz timer clock TIM2-&gt;ARR = ARR; // Auto-reload for frequency</p>
+<p>Set Output Compare channel in Toggle mode: Example with Channel 1:</p>
+<p>TIM2-&gt;CCMR1 &amp;= ~TIM_CCMR1_OC1M; TIM2-&gt;CCMR1 |= (0b011 &lt;&lt; TIM_CCMR1_OC1M_Pos); // Toggle on match TIM2-&gt;CCER |= TIM_CCER_CC1E; // Enable output on CH1 TIM2-&gt;CCR1 = 0; // Initial compare value</p>
+<p>Route TIM2_CH1 to a GPIO pin (Alternate Function): For instance, PA0 can be TIM2_CH1 (AF1).</p>
+<p>GPIOA-&gt;MODER &amp;= ~(0b11 &lt;&lt; (0<em>2)); GPIOA-&gt;MODER |= (0b10 &lt;&lt; (0</em>2)); // Alternate function GPIOA-&gt;AFR[0] |= (0b0001 &lt;&lt; (0*4)); // AF1 = TIM2_CH1</p>
+<p>Enable timer counter:</p>
+<p>TIM2-&gt;CR1 |= TIM_CR1_CEN;</p>
+<p>Now PA0 outputs a square wave at your programmed frequency.</p>
+<ol start="5" type="1">
+<li>Summary</li>
+</ol>
+<p>Best timer for GPIO frequency generation: TIM2 (32-bit, flexible, direct AF mapping).</p>
+<p>Key formulae:</p>
+<p>Timer tick: 𝑓𝑇𝐼𝑀=𝑓𝐴𝑃𝐵𝑥/(𝑃𝑆𝐶+1)fTIM =fAPBx/(PSC+1)</p>
+<p>Update rate: 𝑓𝑈𝑃𝐷=𝑓𝑇𝐼𝑀/(𝐴𝑅𝑅+1)fUPD =fTIM/(ARR+1)</p>
+<p>Square wave output (toggle mode): 𝑓𝑆𝑄=𝑓𝑈𝑃𝐷/2fSQ =fUPD/2</p>
+<p>Registers to configure: TIMx_PSC, TIMx_ARR, TIMx_CCRy, TIMx_CCMRy, TIMx_CCER, TIMx_CR1, and the corresponding GPIO MODER/AFR.</p>
+<p>Would you like me to also show you a full minimal C example (using direct register writes) that generates, say, 440 Hz on a pin — so you can adapt it to 220–1kHz easily?</p>
+<p>This is super cool because it actually gave me examples and equations for how to use it. I think this did a great job at answering my question and looking through the data sheet I belive that what it gave me is actually correct. This would have been useful when working on this project actually.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
