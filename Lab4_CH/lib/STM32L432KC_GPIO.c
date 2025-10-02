@@ -34,3 +34,13 @@ void togglePin(int pin) {
     // Use XOR to toggle
     GPIO->ODR ^= (1 << pin);
 }
+
+void enablePWM(void){
+    pinMode(6, GPIO_ALT);
+    
+    // Set Pin mode of what ever GPIO  1110: AF14
+    GPIO->AFRL |= (0b1110 <<24);
+
+    // Push Pull on OTYPER to allow current to flow in and out (PWM goes high and low)
+    GPIO->OTYPER &= ~(0b1 <<6);
+}

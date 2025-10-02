@@ -33,10 +33,10 @@ void configurePLL() {
     RCC->PLLCFGR |= (1 << 25);
     
     // Set HCLK prescalers
-    RCC->AHB &= ~(0b1010 << 4); // Divide by 8
+    RCC->CFGR &= ~(0b1010 << 4); // Divide by 8
 
     // Set PPRE2 prescalers
-    RCC->APB &= ~(0b100 << 11); // Divide by 2
+    RCC->CFGR &= ~(0b100 << 11); // Divide by 2
 
     // Enable PLLR output
     RCC->PLLCFGR |= (1 << 24);
@@ -63,4 +63,17 @@ void configureClock(){
     // Select PLL as clock source
     RCC->CFGR |= (0b11 << 0);
     while(!((RCC->CFGR >> 2) & 0b11));
+
+    // Set AHB prescaler
+    RCC->CFGR |= (0b1010 << 4);  // divide PLL clock by 8 (=10MHz)
+
+    // Set APB2 prescaler
+    RCC->CFGR |= (0b100 << 11); // divide by 2 (=5MHz)
+
+    //Enable APB2
+    RCC->APB2ENR |= (0b11 <<16); // enable TIM15 and TIM16
+
+    //Enable AHB (GPIO port A)
+    RCC->AHB2ENR |= (0b1);
+
 }

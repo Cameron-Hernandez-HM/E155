@@ -46,7 +46,7 @@ typedef struct {
 #define GPIOA ((GPIO *) GPIOA_BASE)
 #define GPIOB ((GPIO *) GPIOB_BASE)
 
-#define GPIO GPIOB
+#define GPIO GPIOA
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
@@ -59,5 +59,7 @@ int digitalRead(int pin);
 void digitalWrite(int pin, int val);
 
 void togglePin(int pin);
+
+void enablePWM(void);
 
 #endif

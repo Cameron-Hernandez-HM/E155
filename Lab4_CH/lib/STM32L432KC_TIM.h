@@ -82,8 +82,8 @@ typedef struct
   __IO uint32_t TIM16_OR2;       /*!< TIM16 option register 2,                                             Address offset: 0x60 */
 } TIM16_TypeDef;
 
-#define TIM15 ((TIM_TypeDef *) TIM15_BASE)
-#define TIM16 ((TIM_TypeDef *) TIM16_BASE)
+#define TIM15 ((TIM15_TypeDef *) TIM15_BASE)
+#define TIM16 ((TIM16_TypeDef *) TIM16_BASE)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
@@ -92,5 +92,6 @@ typedef struct
 void configureTIM15(void);
 void delay(uint32_t ms);
 void configureTIM16(void);
+void defineDutyFreq(uint32_t inputFreq);
 
 #endif
