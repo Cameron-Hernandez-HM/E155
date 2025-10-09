@@ -189,13 +189,19 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction:</h2>
 <p>This lab required the use of an MCU programmed to determine the speed of a motor via reading a quiadrture encoder using interrupts. To do this required the configuring of the MCU’s External Interrupt (EXTI) system to monitor the encoder’s Channel A (PA6) and Channel B (PA8) outputs, enabling both rising and falling edge detection on both signals to achieve maximum 4x counting resolution. The Interrupt Service Routine (ISR) was responsible for rapidly incrementing a counter variable and decoding the motor’s direction based on the phase relationship between the two signals at the moment of the edge.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/setup.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Setup of system, Cameron Hernandez, 10/9/2025</figcaption>
+</figure>
+</div>
 </section>
 <section id="flow-chart" class="level2">
 <h2 class="anchored" data-anchor-id="flow-chart">FLow Chart:</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/FlowChart.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 1: Schematic, Cameron Hernandez, 10/9/2025</figcaption>
+<figcaption>Figure 2: Schematic, Cameron Hernandez, 10/9/2025</figcaption>
 </figure>
 </div>
 <p>This is my flowchart of the system</p>
@@ -205,7 +211,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/circuit.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 2: Schematic, Cameron Hernandez, 10/9/2025</figcaption>
+<figcaption>Figure 3: Schematic, Cameron Hernandez, 10/9/2025</figcaption>
 </figure>
 </div>
 <p>Figure 2 illustrates a the schematic of the system where my STM32L432KC MCU is interfacing with a 25GA-370 DC Motor using ports that can support 5 volts PA8 &amp; PA6.</p>
@@ -214,7 +220,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/calculations.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 3: Clock Duration Calculations, Cameron Hernandez, 10/2/2025</figcaption>
+<figcaption>Figure 4: Clock Duration Calculations, Cameron Hernandez, 10/2/2025</figcaption>
 </figure>
 </div>
 </section>

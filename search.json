@@ -200,21 +200,21 @@
     "href": "labs/lab5/lab5.html#introduction",
     "title": "Lab 5: Interrupts",
     "section": "Introduction:",
-    "text": "Introduction:\nThis lab required the use of an MCU programmed to determine the speed of a motor via reading a quiadrture encoder using interrupts. To do this required the configuring of the MCU’s External Interrupt (EXTI) system to monitor the encoder’s Channel A (PA6) and Channel B (PA8) outputs, enabling both rising and falling edge detection on both signals to achieve maximum 4x counting resolution. The Interrupt Service Routine (ISR) was responsible for rapidly incrementing a counter variable and decoding the motor’s direction based on the phase relationship between the two signals at the moment of the edge."
+    "text": "Introduction:\nThis lab required the use of an MCU programmed to determine the speed of a motor via reading a quiadrture encoder using interrupts. To do this required the configuring of the MCU’s External Interrupt (EXTI) system to monitor the encoder’s Channel A (PA6) and Channel B (PA8) outputs, enabling both rising and falling edge detection on both signals to achieve maximum 4x counting resolution. The Interrupt Service Routine (ISR) was responsible for rapidly incrementing a counter variable and decoding the motor’s direction based on the phase relationship between the two signals at the moment of the edge.\n\n\n\nFigure 1: Setup of system, Cameron Hernandez, 10/9/2025"
   },
   {
     "objectID": "labs/lab5/lab5.html#flow-chart",
     "href": "labs/lab5/lab5.html#flow-chart",
     "title": "Lab 5: Interrupts",
     "section": "FLow Chart:",
-    "text": "FLow Chart:\n\n\n\nFigure 1: Schematic, Cameron Hernandez, 10/9/2025\n\n\nThis is my flowchart of the system"
+    "text": "FLow Chart:\n\n\n\nFigure 2: Schematic, Cameron Hernandez, 10/9/2025\n\n\nThis is my flowchart of the system"
   },
   {
     "objectID": "labs/lab5/lab5.html#schematic",
     "href": "labs/lab5/lab5.html#schematic",
     "title": "Lab 5: Interrupts",
     "section": "Schematic:",
-    "text": "Schematic:\n\n\n\nFigure 2: Schematic, Cameron Hernandez, 10/9/2025\n\n\nFigure 2 illustrates a the schematic of the system where my STM32L432KC MCU is interfacing with a 25GA-370 DC Motor using ports that can support 5 volts PA8 & PA6.\n\nCalculations:\n\n\n\nFigure 3: Clock Duration Calculations, Cameron Hernandez, 10/2/2025"
+    "text": "Schematic:\n\n\n\nFigure 3: Schematic, Cameron Hernandez, 10/9/2025\n\n\nFigure 2 illustrates a the schematic of the system where my STM32L432KC MCU is interfacing with a 25GA-370 DC Motor using ports that can support 5 volts PA8 & PA6.\n\nCalculations:\n\n\n\nFigure 4: Clock Duration Calculations, Cameron Hernandez, 10/2/2025"
   },
   {
     "objectID": "labs/lab5/lab5.html#results",
