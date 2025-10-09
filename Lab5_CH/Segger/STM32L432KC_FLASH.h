@@ -1,0 +1,19 @@
+// STM32L432KC_FLASH.h
+// Cameron Hernandez
+// cahernandez@hmc.edu
+// 10/09/25
+// Header for FLASH functions
+
+#ifndef STM32L4_FLASH_H
+#define STM32L4_FLASH_H
+
+#include <stdint.h>
+#include <stm32l432xx.h>
+
+///////////////////////////////////////////////////////////////////////////////
+// Function prototypes
+///////////////////////////////////////////////////////////////////////////////
+
+void configureFlash();
+
+#endif

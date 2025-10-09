@@ -155,7 +155,7 @@ const int birthday[][2] = {
   {440, 321},  // A4
   {349, 321},  // F4
   {330, 321},  // E4
-  {294, 321},  // D4
+  {294, 621},  // D4
 
   {466, 428},  // A#4
   {466, 214},  // A#4
@@ -198,8 +198,8 @@ int main(void) {
         configureTIM16();
         enablePWM();
 
-        //melody(notes);
-        //delay(500);
+        melody(notes);
+        delay(500);
 
         melody(birthday);
 }
