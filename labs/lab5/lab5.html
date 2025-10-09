@@ -122,8 +122,22 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#hours-spent" id="toc-hours-spent" class="nav-link active" data-scroll-target="#hours-spent">Hours Spent:</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction:</a></li>
+  <li><a href="#flow-chart" id="toc-flow-chart" class="nav-link" data-scroll-target="#flow-chart">FLow Chart:</a></li>
+  <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic:</a>
+  <ul class="collapse">
+  <li><a href="#calculations" id="toc-calculations" class="nav-link" data-scroll-target="#calculations">Calculations:</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results:</a></li>
+  <li><a href="#ai-prototype" id="toc-ai-prototype" class="nav-link" data-scroll-target="#ai-prototype">AI Prototype:</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -168,8 +182,94 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="hours-spent" class="level2">
+<h2 class="anchored" data-anchor-id="hours-spent">Hours Spent:</h2>
+<p>7</p>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction:</h2>
+<p>This lab required the use of an MCU programmed to determine the speed of a motor via reading a quiadrture encoder using interrupts. To do this required the configuring of the MCU’s External Interrupt (EXTI) system to monitor the encoder’s Channel A (PA6) and Channel B (PA8) outputs, enabling both rising and falling edge detection on both signals to achieve maximum 4x counting resolution. The Interrupt Service Routine (ISR) was responsible for rapidly incrementing a counter variable and decoding the motor’s direction based on the phase relationship between the two signals at the moment of the edge.</p>
+</section>
+<section id="flow-chart" class="level2">
+<h2 class="anchored" data-anchor-id="flow-chart">FLow Chart:</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/FlowChart.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Schematic, Cameron Hernandez, 10/9/2025</figcaption>
+</figure>
+</div>
+<p>This is my flowchart of the system</p>
+</section>
+<section id="schematic" class="level2">
+<h2 class="anchored" data-anchor-id="schematic">Schematic:</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/circuit.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Schematic, Cameron Hernandez, 10/9/2025</figcaption>
+</figure>
+</div>
+<p>Figure 2 illustrates a the schematic of the system where my STM32L432KC MCU is interfacing with a 25GA-370 DC Motor using ports that can support 5 volts PA8 &amp; PA6.</p>
+<section id="calculations" class="level3">
+<h3 class="anchored" data-anchor-id="calculations">Calculations:</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/calculations.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 3: Clock Duration Calculations, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results:</h2>
+<p>The implementation works, the MCU is able to ditect the motor spinning and calcuate it’s RPM. Depending on the polarity of the system the MCU can also tell you if the motor is spinning clockwise or counter-clockwise.</p>
+</section>
+<section id="ai-prototype" class="level2">
+<h2 class="anchored" data-anchor-id="ai-prototype">AI Prototype:</h2>
+<p>For the AI Prototype, I asked ChatGPT if it could write me interrupt handlers to interface with a quadrature encoder. I’m using the STM32L432KC, what pins should I connect the encoder to in order to allow it to easily trigger the interrupts?</p>
+<p>Here Chat told me that first, the STM32L432KC is great for decoding quadrature encoders because its TIM2, TIM3, and TIM4 peripherals can operate in encoder interface mode, saving you from manually writing interrupt-based decoders.</p>
+<p>However, if you specifically want to use external interrupts (EXTI) to handle the encoder signals in software (rather than using the built-in encoder mode), let’s go over both options.</p>
+<p>It gave me multiple options on how to do this, first via Use Hardware Encoder Mode (No Manual ISRs Needed).</p>
+<p>#include “stm32l4xx_hal.h”</p>
+<p>TIM_HandleTypeDef htim2;</p>
+<p>void Encoder_Init(void) { __HAL_RCC_TIM2_CLK_ENABLE(); __HAL_RCC_GPIOA_CLK_ENABLE();</p>
+<pre><code>GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+// Configure PA0, PA1 as TIM2 CH1/CH2 in alternate function
+GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;
+GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+GPIO_InitStruct.Pull = GPIO_NOPULL;
+GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
+HAL_GPIO_Init(GPIOA, &amp;GPIO_InitStruct);
+
+// Configure TIM2 in encoder interface mode
+htim2.Instance = TIM2;
+htim2.Init.Prescaler = 0;
+htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+htim2.Init.Period = 0xFFFFFFFF;
+htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+
+TIM_Encoder_InitTypeDef encoderConfig = {0};
+encoderConfig.EncoderMode = TIM_ENCODERMODE_TI12;
+
+encoderConfig.IC1Polarity = TIM_INPUTCHANNELPOLARITY_RISING;
+encoderConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
+encoderConfig.IC1Prescaler = TIM_ICPSC_DIV1;
+encoderConfig.IC1Filter = 2;
+
+encoderConfig.IC2Polarity = TIM_INPUTCHANNELPOLARITY_RISING;
+encoderConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
+encoderConfig.IC2Prescaler = TIM_ICPSC_DIV1;
+encoderConfig.IC2Filter = 2;
+
+HAL_TIM_Encoder_Init(&amp;htim2, &amp;encoderConfig);
+HAL_TIM_Encoder_Start(&amp;htim2, TIM_CHANNEL_ALL);</code></pre>
+<p>}</p>
+<p>// Read encoder position: int32_t Encoder_GetCount(void) { return (int32_t)__HAL_TIM_GET_COUNTER(&amp;htim2); }</p>
+<p>This is super cool that it gave me pins, however, looking at the data sheet, these pins are not safe for up to 5 volts. So while this code does look correct, and may even properly initialize the pins I would not trust it on my board as it may break it.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
