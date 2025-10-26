@@ -21,6 +21,62 @@
     "text": "Lab 1: FPGA and MCU Setup and Testing\n\n\nIn this lab you will familiarize yourself with the microcontroller unit (MCU) and field-programmable gate array (FPGA) development boards we will be using this semester.\n\n\n\n\n\nSep 4, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 2: Multiplexed 7-Segment Display\n\n\nIn this lab you will learn how to use time multiplexing to efficiently use the I/O on your FPGA.\n\n\n\n\n\nSep 11, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 3: Keypad Scanner\n\n\nIn this lab you will learn how to use an FPGA to scan inputs from a keypad.\n\n\n\n\n\nSep 18, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 4: Digital Audio\n\n\nIn this lab you will use your MCU to play music by using timers to generate square waves by toggling a GPIO pin at a specific frequency for specified durations.\n\n\n\n\n\nOct 2, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 5: Interrupts\n\n\nIn this lab you will use your MCU to determine the speed of a motor by reading from a quadrature encoder using interrupts.\n\n\n\n\n\nOct 9, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 6: The Internet of Things and Serial Peripheral Interface\n\n\nIn this lab, you will learn how to design and build an Internet of Things (IoT) device by implementing SPI communication on an MCU, interfacing with a temperature sensor and an ESP8266 WiFi module, debugging serial protocols with a logic analyzer, and creating an HTML webpage to control an LED and display real-time temperature data.\n\n\n\n\n\nOct 23, 2025\n\n\nCameron Hernandez\n\n\n\n\n\n\n\n\n\n\n\n\nLab 7: The Advanced Encryption Standard\n\n\nIn this lab, you will design and implement a hardware accelerator on an FPGA to perform 128-bit AES encryption, interface it with an MCU over SPI, debug your system using a logic analyzer, and gain hands-on experience with reading complex specifications, hardware architecture, and hardware-software integration.\n\n\n\n\n\nOct 30, 2025\n\n\nCameron Hernandez\n\n\n\n\n\nNo matching items"
   },
   {
+    "objectID": "labs/lab6/lab6.html",
+    "href": "labs/lab6/lab6.html",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "",
+    "text": "21"
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#hours-spent",
+    "href": "labs/lab6/lab6.html#hours-spent",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "",
+    "text": "21"
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#introduction",
+    "href": "labs/lab6/lab6.html#introduction",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Introduction:",
+    "text": "Introduction:\nLab 6 required building an internet-accessible device capable of measuring ambient temperature, using a DS1722 temperature sensor, as well as controlling an onboard LED. To accomplish this, the MCU had to program SPI peripherals in order to push, send, and view currenture temperature readings onto the website. Furthermore, an ESP8255 wifi chip was utilized in order to access the website. To implement SPI required a function to initialize SPI communication, which needed a baud rate, clock phase & polarity. Here the baud rate was set to 0b111 in order for the SPI clock to run slower than the clock for the temperature sensor, allowing for SPI to properly retrieve temperature data. Here the packet size was configured to 8 bits allowing for easy alignment with the outputs of the temperature sensor. Furthermore, PA5 was defined to control the chip enable, which manually toggled for each SPI read and write operation. For the otherSPI peripherals port PB3 controlled the SPI clock, port PB4 controlled the MISO, and port PB5 controlled the MOSI. Lastly, port PB0 controlled the LED which could be turned on and off via buttons on the website.\n\n\n\nFigure 1: Setup of system, Cameron Hernandez, 10/21/2025"
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#using-the-temperature-sensor",
+    "href": "labs/lab6/lab6.html#using-the-temperature-sensor",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Using the Temperature Sensor:",
+    "text": "Using the Temperature Sensor:\nCommunicating with the temperature sensor requires a defined write address, which is 0x80, followed by reading from the least significant bit (LSB) then the most significant bit (MSB). To read the LSB required to call read address 0x01 and to read from the MSB required to call read address address 0x02. To print the temperature required to isolate the sign bit in the MSB then the other values would be used to determine the specific integer value of the temperature. Lastly, depending on the sign bit (positive or negative) would require either adding or subtracting the corresponding resolution bits."
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#schematic",
+    "href": "labs/lab6/lab6.html#schematic",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Schematic:",
+    "text": "Schematic:\n\n\n\nFigure 2: Schematic, Cameron Hernandez, 10/21/2025\n\n\nFigure 3 illustrates how SPI interacts with the temperature sensor through the communcation of wires between the MCU and the DS1722. This circuit also illustrates how the LED works and communcaiton between the wifi chip and MCU."
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#logic-analyzer-testing-and-debugging",
+    "href": "labs/lab6/lab6.html#logic-analyzer-testing-and-debugging",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Logic Analyzer Testing and Debugging:",
+    "text": "Logic Analyzer Testing and Debugging:\nDebugging was conducted using both the SEGGER debugger and a logic analyzer. This method proved effective in confirming that the temperature conversion algorithm produced the expected results.The logic analyzer was utilized to monitor SPI communication signals. By decoding the MISO and MOSI lines, the transmitted and received data values could be directly interpreted, simplifying the analysis of SPI transactions. During this process, an error was identified: the initial Baud Rate was incorrect (originally set as 8 instead of 7) which caused reading issues between the MCU and the temperature chip. Further investigation revealed that the issue was caused by errors in the initial wiring as the MISO line and MOSI line were accidentally swapped. A representative SPI transaction captured by the logic analyzer is shown below.\n\n\n\nFigure 3: Logic Analyzer Wave Forms, 10/21/2025"
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#results",
+    "href": "labs/lab6/lab6.html#results",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Results:",
+    "text": "Results:\nThe implementation works, the MCU and temeprature sensor correctly talk to eachother via SPI communcaiton and can properly read and display the temperature on a website. Furthermore, the different bit configurations also work as a user can toggle between 8 to 12 bit configuration. Lastly the LED can be controled via the buttons on the website."
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#ai-prototype",
+    "href": "labs/lab6/lab6.html#ai-prototype",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "AI Prototype:",
+    "text": "AI Prototype:\nFor the AI prototype I tasked Chat GPT to create a HTML page that looks good and is intuitive to show the temperature, control an LED, and change the precision of the readout. Almost instaly Chat responded and created “a clean, modern, and intuitive HTML+CSS+JS page for your temperature sensor portal.” Here it gave me some notes before sharing the code with me. Firstly it uses an auto-updating from a fake example sensor API. Next it has an LED control switch which one can toggle on/off. I would share the code, but it seems to break my website when I paste it in. Crazy enough the code actually works and changes my white background to a blue and inserts this crazy temperature UI that actually detects the temperature of my room (I am so suprised this actually works). Here is a picture of it breaking my website:\n\n\n\nFigure 4: ChatGPT’s HTML code that kinda works, 10/21/2025\n\n\nNext I asked Chat if it could write me a C function to carry out a SPI transaction to retrieve a temperature reading from a DS1722 sensor. Make use of CMSIS libraries for the STM32L432KC. Here it gave me some backgorund info on the DS1772 where “the DS1722 is a digital thermometer that communicates via SPI, supporting continuous or one-shot temperature conversions. On the STM32L432KC, you can use CMSIS-style register access (not HAL) to keep things lean and fast.” Here is the code that it gave me:\n#include \"stm32l432xx.h\"\n\n#define DS1722_CS_LOW()   (GPIOA-&gt;BSRR = (1 &lt;&lt; (4 + 16))) // Assuming PA4 = CS\n#define DS1722_CS_HIGH()  (GPIOA-&gt;BSRR = (1 &lt;&lt; 4))\n\nstatic uint8_t SPI1_TransmitReceive(uint8_t data);\n\nfloat DS1722_ReadTemperature(void) {\n    uint8_t msb, lsb;\n    uint16_t raw;\n    float temperature;\n\n    DS1722_CS_LOW();\n    SPI1_TransmitReceive(0x82);\n    msb = SPI1_TransmitReceive(0x00);\n    SPI1_TransmitReceive(0x83);\n    lsb = SPI1_TransmitReceive(0x00);\n    DS1722_CS_HIGH();\n\n    raw = ((uint16_t)msb &lt;&lt; 8) | lsb;\n    raw &gt;&gt;= 4;\n    if (raw & 0x800) raw |= 0xF000;\n    temperature = (float)((int16_t)raw) * 0.0625f;\n    return temperature;\n}\n\nstatic uint8_t SPI1_TransmitReceive(uint8_t data) {\n    while (!(SPI1-&gt;SR & SPI_SR_TXE));\n    *((__IO uint8_t *)&SPI1-&gt;DR) = data;\n    while (!(SPI1-&gt;SR & SPI_SR_RXNE));\n    return *((__IO uint8_t *)&SPI1-&gt;DR);\n}\nWhen I tried this code, it did not display correctly, which is kind of upsetting. It seems to me that it may have gotten the parts where it is transmitting using SPI incorrectly. Skimming over the code I see that the unit16_t variable “raw” may not be shifting to the correct spot. Which means it is not reading the data sheet correctly. But this is really helpful with getting started."
+  },
+  {
     "objectID": "labs/lab4/lab4.html",
     "href": "labs/lab4/lab4.html",
     "title": "Lab 4: Digital Audio",
@@ -214,7 +270,21 @@
     "href": "labs/lab5/lab5.html#schematic",
     "title": "Lab 5: Interrupts",
     "section": "Schematic:",
-    "text": "Schematic:\n\n\n\nFigure 3: Schematic, Cameron Hernandez, 10/9/2025\n\n\nFigure 2 illustrates a the schematic of the system where my STM32L432KC MCU is interfacing with a 25GA-370 DC Motor using ports that can support 5 volts PA8 & PA6.\n\nCalculations:\n\n\n\nFigure 4: Clock Duration Calculations, Cameron Hernandez, 10/2/2025"
+    "text": "Schematic:\n\n\n\nFigure 3: Schematic, Cameron Hernandez, 10/9/2025\n\n\nFigure 2 illustrates a the schematic of the system where my STM32L432KC MCU is interfacing with a 25GA-370 DC Motor using ports that can support 5 volts PA8 & PA6."
+  },
+  {
+    "objectID": "labs/lab5/lab5.html#comparison-between-interrupt-and-manual-polling",
+    "href": "labs/lab5/lab5.html#comparison-between-interrupt-and-manual-polling",
+    "title": "Lab 5: Interrupts",
+    "section": "Comparison between interrupt and manual polling:",
+    "text": "Comparison between interrupt and manual polling:\nHere is an oscilloscope trace of my Encoder cycle (Yellow Square Wave), Pulling cycle (Pink Square Wave), and lastly my interrupt handler (Cyan Square Wave).\n\n\n\nFigure 4: Signals, Cameron Hernandez, 10/9/2025\n\n\nSince we only care about the state change, we are looking at the rising part of the interrupt handler, which is 88 micro seconds. Thus, (1/88)*10^6 or 11.3 6 kHZ is the maximum frequency that the interrupt can run at before the interrupt handler stops working.\n\n\n\nFigure 5: Interrupt Handler, Cameron Hernandez, 10/9/2025\n\n\nNow looking at the pulling cycle, it takes roughly 212 micro seconds to complete a cycle, this means has a maximum frqeuency of 4.716 kHz which is smaller than the maximum frequency for the interrupt handler. Thus manual pulling is less efficient as it takes longer to run and has a lower maximum operating frequency.\n\n\n\nFigure 6: Pulling Cycle, Cameron Hernandez, 10/9/2025"
+  },
+  {
+    "objectID": "labs/lab5/lab5.html#calculations",
+    "href": "labs/lab5/lab5.html#calculations",
+    "title": "Lab 5: Interrupts",
+    "section": "Calculations:",
+    "text": "Calculations:\n\n\n\nFigure 7: Clock Duration Calculations, Cameron Hernandez, 10/2/2025"
   },
   {
     "objectID": "labs/lab5/lab5.html#results",

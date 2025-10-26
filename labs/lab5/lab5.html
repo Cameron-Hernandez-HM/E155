@@ -130,10 +130,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#hours-spent" id="toc-hours-spent" class="nav-link active" data-scroll-target="#hours-spent">Hours Spent:</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction:</a></li>
   <li><a href="#flow-chart" id="toc-flow-chart" class="nav-link" data-scroll-target="#flow-chart">FLow Chart:</a></li>
-  <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic:</a>
-  <ul class="collapse">
+  <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic:</a></li>
+  <li><a href="#comparison-between-interrupt-and-manual-polling" id="toc-comparison-between-interrupt-and-manual-polling" class="nav-link" data-scroll-target="#comparison-between-interrupt-and-manual-polling">Comparison between interrupt and manual polling:</a></li>
   <li><a href="#calculations" id="toc-calculations" class="nav-link" data-scroll-target="#calculations">Calculations:</a></li>
-  </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results:</a></li>
   <li><a href="#ai-prototype" id="toc-ai-prototype" class="nav-link" data-scroll-target="#ai-prototype">AI Prototype:</a></li>
   </ul>
@@ -215,15 +214,39 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>Figure 2 illustrates a the schematic of the system where my STM32L432KC MCU is interfacing with a 25GA-370 DC Motor using ports that can support 5 volts PA8 &amp; PA6.</p>
-<section id="calculations" class="level3">
-<h3 class="anchored" data-anchor-id="calculations">Calculations:</h3>
+</section>
+<section id="comparison-between-interrupt-and-manual-polling" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-between-interrupt-and-manual-polling">Comparison between interrupt and manual polling:</h2>
+<p>Here is an oscilloscope trace of my Encoder cycle (Yellow Square Wave), Pulling cycle (Pink Square Wave), and lastly my interrupt handler (Cyan Square Wave).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/calculations.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 4: Clock Duration Calculations, Cameron Hernandez, 10/2/2025</figcaption>
+<p><img src="images/AllSignals.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: Signals, Cameron Hernandez, 10/9/2025</figcaption>
+</figure>
+</div>
+<p>Since we only care about the state change, we are looking at the rising part of the interrupt handler, which is 88 micro seconds. Thus, (1/88)*10^6 or 11.3 6 kHZ is the maximum frequency that the interrupt can run at before the interrupt handler stops working.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/InteruptHandler.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 5: Interrupt Handler, Cameron Hernandez, 10/9/2025</figcaption>
+</figure>
+</div>
+<p>Now looking at the pulling cycle, it takes roughly 212 micro seconds to complete a cycle, this means has a maximum frqeuency of 4.716 kHz which is smaller than the maximum frequency for the interrupt handler. Thus manual pulling is less efficient as it takes longer to run and has a lower maximum operating frequency.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/PullingCycle.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 6: Pulling Cycle, Cameron Hernandez, 10/9/2025</figcaption>
 </figure>
 </div>
 </section>
+<section id="calculations" class="level2">
+<h2 class="anchored" data-anchor-id="calculations">Calculations:</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/calculations.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 7: Clock Duration Calculations, Cameron Hernandez, 10/2/2025</figcaption>
+</figure>
+</div>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results:</h2>
