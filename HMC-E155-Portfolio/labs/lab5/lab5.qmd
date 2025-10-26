@@ -16,20 +16,37 @@ draft: false
 
 This lab required the use of an MCU programmed to determine the speed of a motor via reading a quiadrture encoder using interrupts. To do this required the configuring of the MCU's External Interrupt (EXTI) system to monitor the encoder's Channel A (PA6) and Channel B (PA8) outputs, enabling both rising and falling edge detection on both signals to achieve maximum 4x counting resolution. The Interrupt Service Routine (ISR) was responsible for rapidly incrementing a counter variable and decoding the motor's direction based on the phase relationship between the two signals at the moment of the edge.
 
+![Figure 1: Setup of system, Cameron Hernandez, 10/9/2025](images/setup.jpg)
 
 ## FLow Chart:
-![Figure 1: Schematic, Cameron Hernandez, 10/9/2025](images/FlowChart.jpg)
+![Figure 2: Schematic, Cameron Hernandez, 10/9/2025](images/FlowChart.jpg)
 
 This is my flowchart of the system
 
 ## Schematic:
-![Figure 2: Schematic, Cameron Hernandez, 10/9/2025](images/circuit.jpg)
+![Figure 3: Schematic, Cameron Hernandez, 10/9/2025](images/circuit.jpg)
 
 Figure 2 illustrates a the schematic of the system where my STM32L432KC MCU is interfacing with a 25GA-370 DC Motor using ports that can support 5 volts PA8 & PA6. 
 
-### Calculations:
 
-![Figure 3: Clock Duration Calculations, Cameron Hernandez, 10/2/2025](images/calculations.jpg)
+## Comparison between interrupt and manual polling:
+
+Here is an oscilloscope trace of my Encoder cycle (Yellow Square Wave), Pulling cycle (Pink Square Wave), and lastly my interrupt handler (Cyan Square Wave).
+
+![Figure 4: Signals, Cameron Hernandez, 10/9/2025](images/AllSignals.png)
+
+Since we only care about the state change, we are looking at the rising part of the interrupt handler, which is 88 micro seconds. Thus, (1/88)*10^6 or 11.3 6 kHZ is the maximum frequency that the interrupt can run at before the interrupt handler stops working. 
+
+![Figure 5: Interrupt Handler, Cameron Hernandez, 10/9/2025](images/InteruptHandler.png)
+
+Now looking at the pulling cycle, it takes roughly 212 micro seconds to complete a cycle, this means has a maximum frqeuency of 4.716 kHz which is smaller than the maximum frequency for the interrupt handler. Thus manual pulling is less efficient as it takes longer to run and has a lower maximum operating frequency. 
+
+![Figure 6: Pulling Cycle, Cameron Hernandez, 10/9/2025](images/PullingCycle.png)
+
+
+## Calculations:
+
+![Figure 7: Clock Duration Calculations, Cameron Hernandez, 10/2/2025](images/calculations.jpg)
 
 
 ## Results:

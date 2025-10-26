@@ -71,10 +71,16 @@ int main(void) {
     EXTI->RTSR1 |= (1 << gpioPinOffset(PIN_B));// Enable rising edge trigger
     // 3. Enable falling edge trigger
     EXTI->FTSR1 |= (1 << gpioPinOffset(PIN_B));// Enable falling edge trigger
+    
+    // Pins for scoping
+    pinMode(PA10, 1);
+    pinMode(PA5,1);
 
     while (1) {
-        delay_millis(DELAY_TIM, FRAME_MS);
-
+        digitalWrite(PA10,1);
+        printf("HI");
+        //delay_millis(DELAY_TIM, FRAME_MS);
+        /*
         unsigned long counts_in_frame;
         int current_direction;
 
@@ -82,7 +88,7 @@ int main(void) {
         __disable_irq();
         counts_in_frame = pulseCount;
         current_direction = direction;
-        //pulseCount = 0; // Reset the counter for the next frame
+        pulseCount = 0; // Reset the counter for the next frame
         __enable_irq();
 
         // Calculate RPS
@@ -106,13 +112,15 @@ int main(void) {
         else {
             printf("Motor has not yet started/Direction unknown\n");
         }
+        */
+        digitalWrite(PA10, 0);
     }
 
 }
 
 // EXTI[9:5] Interrupt Handler (Handles EXTI6 and EXTI8)
 void EXTI9_5_IRQHandler(void){
-    
+    digitalWrite(PA5,1);
     // Check if EXTI line 6 (PIN_A) is the source of the interrupt
     if (EXTI->PR1 & (1 << 6)){
         
@@ -156,4 +164,5 @@ void EXTI9_5_IRQHandler(void){
 
         EXTI->PR1 |= (1 << 8); // Clear the EXTI line 8 pending bit
     }
+    digitalWrite(PA5, 0);
 }
