@@ -1,7 +1,9 @@
-// button_interrupt.c
+// main.c
 // Cameron Hernandez
 // cahernandez@hmc.edu
 // 10/09/25
+
+// The main module for Lab 5, this module interfaces with the MCU and the Motor. 
 
 #include "main.h"
 #include <stdio.h>
