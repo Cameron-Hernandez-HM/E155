@@ -248,7 +248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Debugging was conducted using both the SEGGER debugger and a logic analyzer. This method proved effective in confirming that the temperature conversion algorithm produced the expected results.The logic analyzer was utilized to monitor SPI communication signals. By decoding the MISO and MOSI lines, the transmitted and received data values could be directly interpreted, simplifying the analysis of SPI transactions. During this process, an error was identified: the initial Baud Rate was incorrect (originally set as 8 instead of 7) which caused reading issues between the MCU and the temperature chip. Further investigation revealed that the issue was caused by errors in the initial wiring as the MISO line and MOSI line were accidentally swapped. A representative SPI transaction captured by the logic analyzer is shown below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/clart.png" class="img-fluid figure-img"></p>
+<p><img src="images/logic.png" class="img-fluid figure-img"></p>
 <figcaption>Figure 3: Logic Analyzer Wave Forms, 10/21/2025</figcaption>
 </figure>
 </div>
