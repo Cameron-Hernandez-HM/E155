@@ -12,9 +12,7 @@
     ]
   },
   {
-    "listing": "/blog.html",
-    "items": [
-      "/posts/first-post.html"
-    ]
+    "listing": "/projects.html",
+    "items": []
   }
 ]
