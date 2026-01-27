@@ -8,8 +8,8 @@ website:
       - href: index.qmd
         text: Home
 
-      - href: blog.qmd
-        text: Blogs
+      - href: https://roman-de-santos.github.io/E155Project/
+        text: Project
       
       - href: labs.qmd
         text: Labs
